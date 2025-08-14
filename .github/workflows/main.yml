@@ -1,0 +1,30 @@
+name: CI - Build & Push Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Run workflow when code is pushed to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.PRAVI_JAIN }}
+          password: ${{ secrets.PRAVI_JAIN1 }}
+
+      # Step 3: Build Docker image
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.PRAVI_JAIN }}/my-python-app:latest .
+
+      # Step 4: Push Docker image
+      - name: Push Docker image
+        run: docker push ${{ secrets.PRAVI_JAIN }}/my-python-app:latest
